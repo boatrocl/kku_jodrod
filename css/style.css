@@ -1,386 +1,248 @@
 /* ============================================================
-   CSS VARIABLES (เปลี่ยนสีทั้งเว็บที่นี่ที่เดียว)
+   KKU PARKING – RESPONSIVE DESIGN SYSTEM (MOBILE & PC)
    ============================================================ */
 :root {
-    --primary:       #B71C1C;   /* แดง มข. */
-    --primary-light: #E53935;
-    --primary-dark:  #7F0000;
-    --accent:        #1565C0;   /* น้ำเงิน – ตำแหน่งผู้ใช้ */
-    --accent-light:  #42A5F5;
-    --success:       #2E7D32;
-    --warning:       #E65100;
-    --bg:            #F0F2F5;
-    --surface:       #FFFFFF;
-    --text:          #1A1A2E;
-    --text-secondary:#6B7280;
-    --radius:        12px;
-    --shadow-sm:     0 1px 3px rgba(0,0,0,.08);
-    --shadow-md:     0 4px 16px rgba(0,0,0,.10);
-    --shadow-lg:     0 8px 30px rgba(0,0,0,.12);
-    --transition:    .25s cubic-bezier(.4,0,.2,1);
+    --primary:          #B71C1C; /* แดง มข. */
+    --primary-hover:    #991313;
+    --primary-light:    #FFEBEE;
+    --accent:           #1565C0; /* น้ำเงินพิกัดผู้ใช้ */
+    --accent-light:     #E3F2FD;
+    --success:          #15803D; /* เขียวที่จอดว่าง */
+    --success-bg:       #DCFCE7;
+    --warning:          #C2410C; /* ส้มเตือนจุดแออัด */
+    --warning-bg:       #FFEDD5;
+    --surface:          rgba(255, 255, 255, 0.95);
+    --surface-solid:    #FFFFFF;
+    --bg-overlay:       rgba(248, 250, 252, 0.85);
+    --text:             #0F172A;
+    --text-muted:       #64748B;
+    --border:           rgba(226, 232, 240, 0.8);
+    --radius-sm:        8px;
+    --radius-md:        14px;
+    --radius-lg:        22px;
+    --shadow-sm:        0 2px 8px rgba(15, 23, 42, 0.06);
+    --shadow-md:        0 8px 24px rgba(15, 23, 42, 0.12);
+    --shadow-lg:        0 14px 40px rgba(15, 23, 42, 0.18);
+    --transition:       all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-heading:     'Outfit', 'Sarabun', sans-serif;
+    --font-body:        'Sarabun', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ============================================================
-   RESET & BASE
+   RESET & APP LAYOUT
    ============================================================ */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-    font-family: 'Sarabun', 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
-header {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
-    color: #fff;
-    padding: 18px 24px;
-    box-shadow: 0 4px 20px rgba(183,28,28,.3);
-    position: relative;
-    z-index: 10;
-}
-
-.header-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.header-icon {
-    font-size: 2.4rem;
-    background: rgba(255,255,255,.15);
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    backdrop-filter: blur(4px);
-}
-
-.header-text h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -.3px;
-}
-
-.header-text p {
-    font-size: .88rem;
-    opacity: .85;
-    font-weight: 300;
-    margin-top: 2px;
-}
-
-/* ============================================================
-   MAIN LAYOUT
-   ============================================================ */
-.main-layout {
-    flex: 1;
-    display: flex;
-    gap: 0;
-    max-width: 1400px;
+html, body {
     width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    height: calc(100vh - 130px);
-    min-height: 500px;
-}
-
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
-.sidebar {
-    width: 370px;
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-right: 16px;
+    height: 100%;
     overflow: hidden;
-}
-
-/* --- Location Card --- */
-.location-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid #E5E7EB;
-}
-
-.btn-locate {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px;
-    border: 2px dashed var(--accent);
-    border-radius: 10px;
-    background: rgba(21,101,192,.06);
-    color: var(--accent);
-    font-family: inherit;
-    font-size: .95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-locate:hover {
-    background: rgba(21,101,192,.14);
-    border-style: solid;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(21,101,192,.15);
-}
-
-.btn-locate:active { transform: scale(.97); }
-
-.btn-locate.loading {
-    pointer-events: none;
-    opacity: .6;
-}
-
-.btn-locate-icon { font-size: 1.2rem; }
-
-.location-status {
-    font-size: .78rem;
-    color: var(--text-secondary);
-    text-align: center;
-    margin-top: 8px;
-    min-height: 1.2em;
-}
-
-.location-status.success { color: var(--success); }
-.location-status.error   { color: var(--warning); }
-
-/* --- Filter Bar --- */
-.filter-bar {
-    display: flex;
-    gap: 8px;
-}
-
-.filter-bar input,
-.filter-bar select {
-    flex: 1;
-    padding: 10px 14px;
-    border: 1.5px solid #E5E7EB;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: .88rem;
-    background: var(--surface);
+    font-family: var(--font-body);
     color: var(--text);
-    transition: var(--transition);
-    outline: none;
+    background: #E2E8F0;
 }
 
-.filter-bar input:focus,
-.filter-bar select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(183,28,28,.1);
-}
-
-.filter-bar select { flex: 0 0 140px; cursor: pointer; }
-
-/* --- Sidebar Title --- */
-.sidebar-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-top: 4px;
-}
-
-.sidebar-subtitle {
-    font-size: .8rem;
-    color: var(--text-secondary);
-    margin-top: -6px;
-}
-
-/* --- Parking List --- */
-.parking-list {
-    list-style: none;
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Custom scrollbar */
-.parking-list::-webkit-scrollbar { width: 5px; }
-.parking-list::-webkit-scrollbar-track { background: transparent; }
-.parking-list::-webkit-scrollbar-thumb {
-    background: #D1D5DB;
-    border-radius: 10px;
-}
-.parking-list::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
-
-/* ============================================================
-   PARKING CARD (หัวใจของ UI)
-   ============================================================ */
-.parking-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 16px;
-    border-left: 4px solid var(--success);
-    box-shadow: var(--shadow-sm);
-    cursor: pointer;
-    transition: var(--transition);
+.app-container {
+    width: 100%;
+    height: 100dvh;
+    height: 100vh; /* fallback */
     position: relative;
     overflow: hidden;
+    display: flex;
 }
 
-.parking-card::after {
-    content: '';
+/* ============================================================
+   FULLSCREEN MAP VIEWPORT
+   ============================================================ */
+.map-viewport {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, transparent 60%, rgba(183,28,28,.03));
-    pointer-events: none;
-    transition: var(--transition);
-}
-
-.parking-card:hover {
-    transform: translateY(-3px) translateX(4px);
-    box-shadow: var(--shadow-md);
-    border-left-color: var(--primary);
-}
-
-.parking-card:hover::after {
-    background: linear-gradient(135deg, transparent 40%, rgba(183,28,28,.06));
-}
-
-.parking-card.type-main {
-    border-left-color: var(--warning);
-}
-
-.parking-card.active {
-    border-left-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary), var(--shadow-md);
-}
-
-/* Card Header */
-.card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 6px;
-}
-
-.card-header h3 {
-    font-size: .98rem;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-}
-
-/* Badges */
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: .7rem;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.badge-available {
-    background: #E8F5E9;
-    color: var(--success);
-}
-
-.badge-crowded {
-    background: #FFF3E0;
-    color: var(--warning);
-}
-
-.badge-distance {
-    background: #E3F2FD;
-    color: var(--accent);
-}
-
-/* Card Body */
-.card-desc {
-    font-size: .82rem;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
-
-/* Card Footer */
-.card-footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.btn-navigate {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 14px;
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: .78rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-}
-
-.btn-navigate:hover {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(183,28,28,.25);
-}
-
-.btn-navigate.hidden { display: none; }
-
-/* ============================================================
-   MAP
-   ============================================================ */
-.map-wrapper {
-    flex: 1;
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    position: relative;
-    border: 1px solid #E5E7EB;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 #map {
     width: 100%;
     height: 100%;
+    background: #E5E7EB;
 }
 
-/* Floating button on map */
-.map-float-btn {
+/* Leaflet Zoom Control ซ่อนเพื่อใช้ท่าทางสัมผัสหรือวงล้อเมาส์ */
+.leaflet-control-zoom {
+    display: none !important;
+}
+
+/* Attribution ให้เล็กลงและไม่บังขอบ */
+.leaflet-control-attribution {
+    font-size: 9px !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    padding: 2px 6px !important;
+    margin-bottom: 95px !important; /* หลบ bottom sheet peek บนมือถือ */
+}
+
+/* ============================================================
+   SIDEBAR PANEL CONTAINER
+   ============================================================ */
+/* บนมือถือ (< 769px): สลายตัวด้วย display: contents เพื่อให้ top-bar ลอยบน และ bottom-sheet อยู่ล่าง */
+.sidebar-panel {
+    display: contents;
+}
+
+/* ============================================================
+   TOP FLOATING BAR (Brand, Search, Filter Chips)
+   ============================================================ */
+.top-bar {
     position: absolute;
-    bottom: 24px;
-    right: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
-    width: 46px; height: 46px;
-    border-radius: 50%;
-    border: none;
+    padding: max(10px, env(safe-area-inset-top)) 14px 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none; /* ให้คลิกทะลุแผนที่ได้ในจุดที่ว่าง */
+}
+
+.brand-bar,
+.search-box,
+.filter-chips-container {
+    pointer-events: auto;
+}
+
+/* --- Brand Bar --- */
+.brand-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+
+.brand-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.brand-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.15;
+}
+
+.brand-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.gps-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: #F1F5F9;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.gps-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #94A3B8;
+    transition: var(--transition);
+}
+
+.gps-badge.active {
+    background: var(--accent-light);
     color: var(--accent);
+}
+
+.gps-badge.active .gps-dot {
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* --- Search Box --- */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: var(--surface-solid);
+    border-radius: var(--radius-md);
+    padding: 2px 12px;
     box-shadow: var(--shadow-md);
+    border: 1.5px solid transparent;
+    transition: var(--transition);
+}
+
+.search-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(183, 28, 28, 0.18);
+}
+
+.search-icon {
+    font-size: 0.95rem;
+    opacity: 0.6;
+    margin-right: 8px;
+}
+
+.search-box input {
+    flex: 1;
+    height: 42px;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text);
+    background: transparent;
+}
+
+.search-box input::placeholder {
+    color: #94A3B8;
+}
+
+.btn-clear {
+    border: none;
+    background: #F1F5F9;
+    color: #64748B;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.75rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -388,31 +250,486 @@ header {
     transition: var(--transition);
 }
 
-.map-float-btn:hover {
-    background: var(--accent);
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: var(--shadow-lg);
+.btn-clear:active {
+    background: #CBD5E1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Filter Chips Bar --- */
+.filter-chips-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 6px 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.filter-chips-container::-webkit-scrollbar {
+    display: none;
+}
+
+.chip {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.chip:active {
+    transform: scale(0.95);
+}
+
+.chip.active {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(183, 28, 28, 0.3);
+    font-weight: 600;
 }
 
 /* ============================================================
-   CUSTOM MAP MARKERS (Leaflet DivIcon)
+   FLOATING ACTION BUTTONS (FAB)
    ============================================================ */
+.fab-group {
+    position: absolute;
+    right: 14px;
+    bottom: 110px; /* หลบ Peek Bottom Sheet */
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: auto;
+    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* หมุดที่จอดรถ */
+.fab-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-solid);
+    color: var(--text);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: var(--transition);
+}
+
+.fab-btn:active {
+    transform: scale(0.92);
+}
+
+.fab-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.fab-locate {
+    color: var(--accent);
+}
+
+.fab-locate.active {
+    background: var(--accent);
+    color: #FFFFFF;
+}
+
+.fab-nearest {
+    background: #FEF3C7;
+    border: 1.5px solid #F59E0B;
+}
+
+.pulse-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fab-locate.loading .pulse-ring {
+    animation: fab-pulse 1.4s infinite cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes fab-pulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* ============================================================
+   INTERACTIVE BOTTOM SHEET (MOBILE DRAWER)
+   ============================================================ */
+.bottom-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
+    background: var(--surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 -8px 32px rgba(15, 23, 42, 0.16);
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    transition: height 0.32s cubic-bezier(0.33, 1, 0.68, 1), transform 0.32s cubic-bezier(0.33, 1, 0.68, 1);
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* 3 ระดับความสูงของ Bottom Sheet บนมือถือ */
+.bottom-sheet.collapsed {
+    height: 96px;
+}
+
+.bottom-sheet.half {
+    height: 46vh;
+}
+
+.bottom-sheet.expanded {
+    height: 82vh;
+}
+
+/* --- Drag Handle --- */
+.sheet-handle-area {
+    width: 100%;
+    padding: 10px 0 6px 0;
+    display: flex;
+    justify-content: center;
+    cursor: grab;
+}
+
+.sheet-handle-bar {
+    width: 42px;
+    height: 5px;
+    background: #CBD5E1;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+/* --- Sheet Header --- */
+.sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 18px 8px 18px;
+    cursor: pointer;
+}
+
+.sheet-title-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.sheet-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.sheet-status {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.sheet-toggle-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #F1F5F9;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-icon {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.bottom-sheet.expanded .toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* --- Selected Spot Quick Card --- */
+.selected-preview {
+    padding: 0 16px 10px 16px;
+    animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.preview-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    border: 1.5px solid #FEE2E2;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preview-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.preview-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.3;
+}
+
+.preview-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.preview-metrics {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.metric-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.pill-dist {
+    background: var(--accent-light);
+    color: var(--accent);
+}
+
+.pill-walk {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.btn-navigate-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(183, 28, 28, 0.35);
+    transition: var(--transition);
+}
+
+.btn-navigate-primary:active {
+    transform: scale(0.98);
+}
+
+/* --- Scrollable Content / Parking List --- */
+.sheet-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.sheet-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sheet-content::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+}
+
+.spots-summary-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 2px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.badge-count {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.parking-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Parking Card Item */
+.parking-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+}
+
+.parking-card:active {
+    background: #F8FAFC;
+    transform: scale(0.99);
+}
+
+.parking-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary), var(--shadow-sm);
+    background: #FFFBFB;
+}
+
+.card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.card-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.card-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.badge-alt {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.badge-main {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+.card-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top: 1px dashed #F1F5F9;
+}
+
+.card-distance-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.btn-card-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-card-nav:active {
+    background: var(--primary-hover);
+    transform: scale(0.96);
+}
+
+/* ============================================================
+   CUSTOM MAP MARKERS
+   ============================================================ */
 .custom-marker {
-    width: 36px; height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50% 50% 50% 4px;
     transform: rotate(-45deg);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,.25);
-    border: 2.5px solid #fff;
-    transition: transform .2s;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    border: 2.5px solid #FFFFFF;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.custom-marker:hover { transform: rotate(-45deg) scale(1.15); }
+.custom-marker.active {
+    transform: rotate(-45deg) scale(1.22);
+    border-color: #FEF08A;
+    z-index: 1000 !important;
+}
 
 .custom-marker .marker-icon {
     transform: rotate(45deg);
@@ -420,91 +737,172 @@ header {
     line-height: 1;
 }
 
-.custom-marker.alt  { background: var(--success); }
-.custom-marker.main { background: var(--warning); }
+.custom-marker.alt {
+    background: var(--success);
+}
 
-/* หมุดตำแหน่งผู้ใช้ (Pulse) */
-.user-marker {
-    width: 20px; height: 20px;
-    background: var(--accent);
-    border: 3px solid #fff;
+.custom-marker.main {
+    background: var(--warning);
+}
+
+/* หมุดตำแหน่งผู้ใช้ */
+.user-marker-container {
+    width: 22px;
+    height: 22px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-marker-core {
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(21,101,192,.4);
-    animation: pulse 2s infinite;
+    background: var(--accent);
+    border: 2.5px solid #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 2;
 }
 
-@keyframes pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(21,101,192,.45); }
-    70%  { box-shadow: 0 0 0 18px rgba(21,101,192,0); }
-    100% { box-shadow: 0 0 0 0 rgba(21,101,192,0); }
+.user-marker-pulse {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(21, 101, 192, 0.35);
+    animation: user-radar 2.2s infinite ease-out;
+    z-index: 1;
 }
 
-/* Popup สไตล์ */
-.leaflet-popup-content-wrapper {
-    border-radius: 10px !important;
-    box-shadow: var(--shadow-md) !important;
-    font-family: 'Sarabun', sans-serif !important;
-}
-
-.leaflet-popup-content {
-    margin: 12px 16px !important;
-    font-size: .88rem !important;
-    line-height: 1.5 !important;
-}
-
-.popup-title {
-    font-weight: 700;
-    font-size: .95rem;
-    margin-bottom: 4px;
-    color: var(--text);
-}
-
-.popup-status {
-    font-size: .78rem;
-    font-weight: 600;
-    margin-top: 4px;
+@keyframes user-radar {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
 }
 
 /* ============================================================
-   FOOTER
+   DESKTOP & PC ADAPTATION (>= 769px)
    ============================================================ */
-footer {
-    text-align: center;
-    padding: 14px 20px;
-    background: #1A1A2E;
-    color: #9CA3AF;
-    font-size: .8rem;
-    letter-spacing: .2px;
-}
-
-/* ============================================================
-   RESPONSIVE (มือถือ / แท็บเล็ต)
-   ============================================================ */
-@media (max-width: 768px) {
-    header { padding: 14px 16px; }
-    .header-icon { width: 44px; height: 44px; font-size: 1.8rem; border-radius: 10px; }
-    .header-text h1 { font-size: 1.2rem; }
-    .header-text p { font-size: .78rem; }
-
-    .main-layout {
-        flex-direction: column-reverse;
-        height: auto;
-        padding: 12px;
+@media (min-width: 769px) {
+    /* 1. Sidebar Panel กลายเป็นแถบซ้ายแบบสมบูรณ์ รวม Top-bar และ Card List เข้าด้วยกัน */
+    .sidebar-panel {
+        display: flex;
+        flex-direction: column;
         gap: 12px;
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        bottom: 16px;
+        width: 410px;
+        max-width: calc(100vw - 32px);
+        z-index: 1000;
+        pointer-events: none; /* พื้นที่ว่างคลิกทะลุแผนที่ได้ */
     }
 
-    .sidebar {
+    /* 2. Top-bar อยู่ด้านบนสุดของ Sidebar Panel อย่างเป็นระเบียบ */
+    .top-bar {
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
         width: 100%;
-        min-width: unset;
-        padding-right: 0;
-        max-height: 50vh;
+        padding: 0;
+        pointer-events: auto;
+        flex-shrink: 0;
     }
 
-    .map-wrapper {
-        height: 45vh;
-        min-height: 280px;
+    /* 3. Bottom-sheet กลายเป็นกล่องการ์ดรายการอยู่ข้างใต้ Top-bar พอดี ไม่มีการซ้อนทับ */
+    .bottom-sheet {
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        flex: 1; /* ขยายความสูงเต็มพื้นที่ที่เหลือของหน้าจอ */
+        min-height: 0;
+        height: auto !important;
+        max-height: none !important;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border);
+        pointer-events: auto;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: none; /* ปิดแอนิเมชันสไลด์ขึ้นลงบนคอม */
+        padding-bottom: 8px;
     }
 
-    .filter-bar { flex-direction: column; }
-    .filter-bar select { flex: unset; }
+    /* ซ่อนส่วนที่ไม่จำเป็นบน PC เช่น แถบดึงรูด และปุ่มสามเหลี่ยมพับ */
+    .sheet-handle-area {
+        display: none !important;
+    }
+
+    .sheet-toggle-btn {
+        display: none !important;
+    }
+
+    .sheet-header {
+        padding: 14px 18px 8px 18px;
+        cursor: default;
+    }
+
+    .sheet-status {
+        font-size: 0.8rem;
+    }
+
+    .selected-preview {
+        padding: 0 16px 10px 16px;
+        flex-shrink: 0;
+    }
+
+    .sheet-content {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 0 16px 16px 16px;
+    }
+
+    /* 4. FAB Buttons อยู่มุมล่างขวาของหน้าจอแผนที่ */
+    .fab-group {
+        right: 24px;
+        bottom: 24px !important;
+    }
+
+    .leaflet-control-attribution {
+        margin-bottom: 0 !important;
+    }
+}
+
+/* ============================================================
+   DESKTOP MOUSE HOVER EFFECTS
+   ============================================================ */
+@media (hover: hover) {
+    .parking-card:hover {
+        border-color: #CBD5E1;
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+
+    .btn-navigate-primary:hover {
+        background: linear-gradient(135deg, var(--primary-hover) 0%, #7F0000 100%);
+        box-shadow: 0 6px 20px rgba(183, 28, 28, 0.45);
+        transform: translateY(-1px);
+    }
+
+    .btn-card-nav:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .chip:hover:not(.active) {
+        background: #FFFFFF;
+        border-color: #CBD5E1;
+    }
+
+    .fab-btn:hover {
+        transform: scale(1.08);
+        box-shadow: var(--shadow-lg);
+    }
 }

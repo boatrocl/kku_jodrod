@@ -2,79 +2,120 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KKU Parking – แนะนำที่จอดรถทางเลือก</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#B71C1C">
+    <meta name="description" content="ระบบแนะนำแหล่งที่จอดรถทางเลือกเพื่อลดความแออัดภายในมหาวิทยาลัยขอนแก่น">
+    <title>KKU Parking – แนะนำที่จอดรถทางเลือก มข.</title>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <!-- ==================== HEADER ==================== -->
-    <header>
-        <div class="header-inner">
-            <div class="header-icon">🅿️</div>
-            <div class="header-text">
-                <h1>KKU Parking Alternative</h1>
-                <p>ระบบแนะนำแหล่งที่จอดรถทางเลือกเพื่อลดความแออัดภายในมหาวิทยาลัยขอนแก่น</p>
-            </div>
-        </div>
-    </header>
+    <!-- ==================== APP CONTAINER ==================== -->
+    <div class="app-container">
 
-    <!-- ==================== MAIN ==================== -->
-    <main class="main-layout">
+        <!-- ==================== SIDEBAR / FLOATING PANEL ==================== -->
+        <!-- บนมือถือ container นี้จะสลายตัวด้วย display: contents เพื่อให้ top-bar และ bottom-sheet อยู่หัว-ท้ายจอ -->
+        <!-- บน PC container นี้จะเป็น Sidebar ซ้ายสไตล์ Google Maps แบบ Flex รวมเป็นแผงเดียว ไม่มีการซ้อนทับกัน -->
+        <aside class="sidebar-panel" id="sidebar-panel">
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
+            <!-- TOP BAR (Brand, Search, Filter Chips) -->
+            <header class="top-bar">
+                <div class="brand-bar">
+                    <div class="brand-badge">
+                        <span class="brand-icon">🅿️</span>
+                        <div class="brand-info">
+                            <h1 class="brand-title">KKU JodRod</h1>
+                            <span class="brand-sub">แนะนำที่จอดรถทางเลือก มข.</span>
+                        </div>
+                    </div>
+                    <div class="gps-badge" id="gps-badge" title="สถานะ GPS">
+                        <span class="gps-dot"></span>
+                        <span class="gps-text" id="gps-text">GPS ปิดอยู่</span>
+                    </div>
+                </div>
 
-            <!-- ตำแหน่งของฉัน -->
-            <div class="location-card" id="location-card">
-                <button class="btn-locate" id="btn-locate" onclick="locateUser()">
-                    <span class="btn-locate-icon">📍</span>
-                    <span class="btn-locate-text">ระบุตำแหน่งของฉัน</span>
-                </button>
-                <p class="location-status" id="location-status"></p>
-            </div>
+                <!-- Search Input Box -->
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="ค้นหาจุดจอด เช่น วิศวะ, วิทย์, หอสมุด..." autocomplete="off">
+                    <button type="button" class="btn-clear hidden" id="btn-clear-search" aria-label="ล้างคำค้นหา">✕</button>
+                </div>
 
-            <!-- Filter -->
-            <div class="filter-bar">
-                <input type="text" id="search-input" placeholder="🔍 ค้นหาจุดจอดรถ..." />
-                <select id="filter-type">
-                    <option value="all">ทุกประเภท</option>
-                    <option value="alternative">ที่จอดทางเลือก</option>
-                    <option value="main">ที่จอดหลัก</option>
-                </select>
-            </div>
+                <!-- Filter Chips (Horizontal Scrollable) -->
+                <nav class="filter-chips-container" aria-label="ตัวกรองจุดจอด">
+                    <button class="chip active" data-filter="all">ทั้งหมด</button>
+                    <button class="chip" data-filter="alternative">🟢 ทางเลือก (คนน้อย)</button>
+                    <button class="chip" data-filter="main">🟡 ลานหลัก (คนเยอะ)</button>
+                    <button class="chip" data-filter="nearest" id="chip-nearest">⚡ ใกล้ฉันที่สุด</button>
+                </nav>
+            </header>
 
-            <!-- รายการ -->
-            <h2 class="sidebar-title">แหล่งที่จอดรถแนะนำ</h2>
-            <p class="sidebar-subtitle">คลิกที่รายการเพื่อดูตำแหน่งบนแผนที่</p>
-            <ul id="parking-list" class="parking-list"></ul>
+            <!-- INTERACTIVE BOTTOM SHEET / DRAWER (PC: Card List) -->
+            <section class="bottom-sheet collapsed" id="bottom-sheet" aria-label="รายการที่จอดรถ">
+                
+                <!-- Handle bar for touch drag/tap (Mobile only) -->
+                <div class="sheet-handle-area" id="sheet-handle">
+                    <div class="sheet-handle-bar"></div>
+                </div>
+
+                <!-- Sheet Header / Quick Stats -->
+                <div class="sheet-header" id="sheet-header">
+                    <div class="sheet-title-wrap">
+                        <h2 class="sheet-title" id="sheet-title">จุดจอดรถรอบ มข.</h2>
+                        <p class="sheet-status" id="sheet-status">แตะหมุดบนแผนที่ หรือเลือกจากรายการ</p>
+                    </div>
+                    <button class="sheet-toggle-btn" id="sheet-toggle-btn" aria-label="สลับการแสดงผล">
+                        <span class="toggle-icon">▲</span>
+                    </button>
+                </div>
+
+                <!-- Active Selected Spot Preview (Quick 1-Tap Navigate) -->
+                <div class="selected-preview hidden" id="selected-preview">
+                    <!-- เนื้อหาจะถูกแทรกอัตโนมัติเมื่อเลือกจุดจอด -->
+                </div>
+
+                <!-- Scrollable Parking Cards List -->
+                <div class="sheet-content" id="sheet-content">
+                    <div class="spots-summary-bar">
+                        <span id="spots-count-badge" class="badge-count">พบ 6 จุด</span>
+                        <span class="hint-text">คลิกเพื่อดูหมุดและนำทาง</span>
+                    </div>
+                    <ul id="parking-list" class="parking-list">
+                        <!-- รายการจะถูกสร้างอัตโนมัติผ่าน JavaScript -->
+                    </ul>
+                </div>
+            </section>
+
         </aside>
 
-        <!-- แผนที่ -->
-        <section class="map-wrapper">
+        <!-- ==================== FULLSCREEN MAP ==================== -->
+        <main class="map-viewport" id="map-viewport">
             <div id="map"></div>
 
-            <!-- ปุ่มลอยบนแผนที่ -->
-            <button class="map-float-btn" id="map-locate-btn" onclick="locateUser()" title="ตำแหน่งของฉัน">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
-                </svg>
-            </button>
-        </section>
+            <!-- Floating Action Buttons (FABs) -->
+            <div class="fab-group" aria-label="ปุ่มควบคุมแผนที่">
+                <button class="fab-btn fab-locate" id="fab-locate" onclick="locateUser()" title="ตำแหน่งของฉัน" aria-label="ระบุตำแหน่งของฉัน">
+                    <span class="fab-icon">📍</span>
+                    <span class="pulse-ring"></span>
+                </button>
+                <button class="fab-btn" id="fab-recenter" onclick="resetMapCenter()" title="กลับใจกลาง มข." aria-label="กลับสู่ใจกลางมหาวิทยาลัย">
+                    <span class="fab-icon">🎯</span>
+                </button>
+                <button class="fab-btn fab-nearest hidden" id="fab-nearest" onclick="selectNearestSpot()" title="นำทางจุดที่ใกล้ที่สุด" aria-label="ไปยังจุดที่ใกล้ที่สุด">
+                    <span class="fab-icon">⚡</span>
+                </button>
+            </div>
+        </main>
 
-    </main>
-
-    <!-- ==================== FOOTER ==================== -->
-    <footer>
-        <p>โครงงานวิทยาการคอมพิวเตอร์ © 2569 | วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น</p>
-    </footer>
+    </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
