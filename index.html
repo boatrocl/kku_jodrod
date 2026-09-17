@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKU Parking – แนะนำที่จอดรถทางเลือก</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="header-inner">
+            <div class="header-icon">🅿️</div>
+            <div class="header-text">
+                <h1>KKU Parking Alternative</h1>
+                <p>ระบบแนะนำแหล่งที่จอดรถทางเลือกเพื่อลดความแออัดภายในมหาวิทยาลัยขอนแก่น</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN ==================== -->
+    <main class="main-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <!-- ตำแหน่งของฉัน -->
+            <div class="location-card" id="location-card">
+                <button class="btn-locate" id="btn-locate" onclick="locateUser()">
+                    <span class="btn-locate-icon">📍</span>
+                    <span class="btn-locate-text">ระบุตำแหน่งของฉัน</span>
+                </button>
+                <p class="location-status" id="location-status"></p>
+            </div>
+
+            <!-- Filter -->
+            <div class="filter-bar">
+                <input type="text" id="search-input" placeholder="🔍 ค้นหาจุดจอดรถ..." />
+                <select id="filter-type">
+                    <option value="all">ทุกประเภท</option>
+                    <option value="alternative">ที่จอดทางเลือก</option>
+                    <option value="main">ที่จอดหลัก</option>
+                </select>
+            </div>
+
+            <!-- รายการ -->
+            <h2 class="sidebar-title">แหล่งที่จอดรถแนะนำ</h2>
+            <p class="sidebar-subtitle">คลิกที่รายการเพื่อดูตำแหน่งบนแผนที่</p>
+            <ul id="parking-list" class="parking-list"></ul>
+        </aside>
+
+        <!-- แผนที่ -->
+        <section class="map-wrapper">
+            <div id="map"></div>
+
+            <!-- ปุ่มลอยบนแผนที่ -->
+            <button class="map-float-btn" id="map-locate-btn" onclick="locateUser()" title="ตำแหน่งของฉัน">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+                </svg>
+            </button>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p>โครงงานวิทยาการคอมพิวเตอร์ © 2569 | วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
