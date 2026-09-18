@@ -374,6 +374,40 @@ html, body {
     100% { transform: scale(1.6); opacity: 0; }
 }
 
+/* --- Survey FAB (Mobile) --- */
+.fab-survey {
+    background: linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%);
+    color: #FFFFFF;
+    text-decoration: none;
+    border: none;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(109, 40, 217, 0.45);
+}
+
+.fab-survey:active {
+    transform: scale(0.92);
+}
+
+.survey-pulse-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2.5px solid #7C3AED;
+    opacity: 0;
+    pointer-events: none;
+    animation: survey-pulse 2.2s infinite cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes survey-pulse {
+    0% { transform: scale(0.85); opacity: 0.9; }
+    100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* --- Survey Banner (PC Sidebar) --- */
+.survey-banner-btn {
+    display: none; /* ซ่อนบนมือถือ ใช้ FAB แทน */
+}
+
 /* ============================================================
    INTERACTIVE BOTTOM SHEET (MOBILE DRAWER)
    ============================================================ */
@@ -870,6 +904,79 @@ html, body {
         bottom: 24px !important;
     }
 
+    /* ซ่อน Survey FAB บน PC — ใช้ Banner ใน Sidebar แทน */
+    .fab-survey {
+        display: none !important;
+    }
+
+    /* 5. Survey Banner ปรากฏด้านล่าง Sidebar บน PC */
+    .survey-banner-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%);
+        color: #FFFFFF;
+        text-decoration: none;
+        box-shadow: 0 4px 18px rgba(109, 40, 217, 0.4);
+        transition: var(--transition);
+        pointer-events: auto;
+        flex-shrink: 0;
+        border: 1.5px solid rgba(255, 255, 255, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .survey-banner-btn::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 80px;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.08);
+        transform: skewX(-20deg);
+        transition: left 0.5s ease;
+    }
+
+    .survey-banner-btn:hover::before {
+        left: 110%;
+    }
+
+    .survey-banner-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+        line-height: 1;
+    }
+
+    .survey-banner-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .survey-banner-title {
+        font-family: var(--font-heading);
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #FFFFFF;
+        line-height: 1.2;
+    }
+
+    .survey-banner-sub {
+        font-size: 0.73rem;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    .survey-banner-arrow {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+    }
+
     .leaflet-control-attribution {
         margin-bottom: 0 !important;
     }
@@ -904,5 +1011,14 @@ html, body {
     .fab-btn:hover {
         transform: scale(1.08);
         box-shadow: var(--shadow-lg);
+    }
+
+    .survey-banner-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(109, 40, 217, 0.55);
+    }
+
+    .survey-banner-btn:hover .survey-banner-arrow {
+        transform: translateX(4px);
     }
 }
