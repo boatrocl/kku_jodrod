@@ -153,7 +153,7 @@ function renderSpots(spots) {
                 <h3 class="card-name">${spot.name}</h3>
                 <span class="card-badge ${badgeClass}">${badgeLabel}</span>
             </div>
-            <p class="card-desc">${spot.description}</p>
+            <p class="card-desc">${spot.desc}</p>
             <div class="card-footer">
                 <div class="card-distance-group">
                     <span>📏 ${distInfo.distanceText}</span>
@@ -231,7 +231,7 @@ function showSelectedPreview(spot) {
                 <div class="preview-title">${spot.name}</div>
                 <span class="card-badge ${badgeClass}">${badgeLabel}</span>
             </div>
-            <div class="preview-desc">${spot.description}</div>
+            <div class="preview-desc">${spot.desc}</div>
             <div class="preview-metrics">
                 <span class="metric-pill pill-dist">📏 ${distInfo.distanceText}</span>
                 ${distInfo.walkText ? `<span class="metric-pill pill-walk">🚶 ประมาณ ${distInfo.walkText}</span>` : ''}
@@ -482,8 +482,8 @@ function initSearchAndFilters() {
             // กรองตามคำค้นหา
             const matchKeyword = !keyword ||
                 spot.name.toLowerCase().includes(keyword) ||
-                spot.description.toLowerCase().includes(keyword) ||
-                spot.status.toLowerCase().includes(keyword);
+                spot.desc.toLowerCase().includes(keyword) ||
+                spot.landmark.toLowerCase().includes(keyword);
 
             return matchType && matchKeyword;
         });
